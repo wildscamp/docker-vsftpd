@@ -10,4 +10,4 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 21/tcp
 
-ENTRYPOINT ["vsftpd","/etc/vsftpd/vsftpd.conf"]
+ENTRYPOINT ["/entrypoint.sh"]
