@@ -5,4 +5,4 @@ RUN rm -rf /var/cache/apk/*
 
 EXPOSE 21/tcp
 
-ENTRYPOINT ["vsftpd","/etc/vsftpd/vsftpd.conf"]
+#ENTRYPOINT ["vsftpd","/etc/vsftpd/vsftpd.conf"]
