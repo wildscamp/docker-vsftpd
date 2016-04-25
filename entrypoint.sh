@@ -5,8 +5,8 @@ sed -i "s/^pasv_min_port=.*/pasv_min_port=$PASV_MIN_PORT/" /etc/vsftpd/vsftpd.co
 sed -i "s/^pasv_max_port=.*/pasv_max_port=$PASV_MAX_PORT/" /etc/vsftpd/vsftpd.conf
 
 if [ -n "$USER" ] && [ -n "$PASSWD" ]; then
-  adduser -h /var/lib/ftp/ -D -H $USER
-  echo "seedbox:$PASSWD" | chpasswd
+  useradd -d /ftp -m $USER
+  echo "$USER:$PASSWD" | chpasswd
 fi
 
 if [ -n "$SSL_DATA" ]; then
