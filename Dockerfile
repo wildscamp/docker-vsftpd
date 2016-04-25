@@ -6,7 +6,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
-RUN mkdir /etc/vsftpd
+RUN mkdir -p /etc/vsftpd /var/run/vsftpd/empty
 COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
 
 COPY entrypoint.sh /
