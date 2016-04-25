@@ -17,4 +17,4 @@ if [ -n "$SSL_DATA" ]; then
   echo "rsa_private_key_file=/etc/vsftpd/vsftpd.key.pem" >> /etc/vsftpd/vsftpd.conf
 fi
 
-exec vsftpd /etc/vsftpd/vsftpd.conf
+exec /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
