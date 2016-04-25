@@ -5,7 +5,7 @@ sed -i "s/^pasv_min_port=.*/pasv_min_port=$PASV_MIN_PORT/" /etc/vsftpd/vsftpd.co
 sed -i "s/^pasv_max_port=.*/pasv_max_port=$PASV_MAX_PORT/" /etc/vsftpd/vsftpd.conf
 
 if [ -n "$USER" ] && [ -n "$PASSWD" ]; then
-  useradd -d /ftp -m $USER
+  useradd -d /srv/ftp -m $USER
   echo "$USER:$PASSWD" | chpasswd
 fi
 
