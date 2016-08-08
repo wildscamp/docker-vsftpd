@@ -2,7 +2,6 @@ FROM debian:jessie
 
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update -qq && \
-    apt-get install -qqy openssl ca-certificates ssl-cert tcpd && \
     apt-get install -qqy --no-install-recommends vsftpd && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/*
