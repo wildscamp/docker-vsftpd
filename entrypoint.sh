@@ -6,7 +6,8 @@ sed -i "s/^pasv_max_port=.*/pasv_max_port=$PASV_MAX_PORT/" /etc/vsftpd/vsftpd.co
 
 if [ -n "$USER" ] && [ -n "$PASSWD" ]; then
   useradd -d /srv/ftp -M $USER
-  echo "$USER:$PASSWD" | chpasswd -e
+  #echo "$USER:$PASSWD" | chpasswd -e
+  echo "$USER:$PASSWD" | chpasswd
 fi
 
 if [ $SSL = "YES" ]; then
