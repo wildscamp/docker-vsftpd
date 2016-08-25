@@ -2,7 +2,9 @@ FROM debian:jessie
 
 MAINTAINER Joel Rowley <joel.rowley@wilds.org>
 
-ENV RELEASE_DATE 2016-08-25
+LABEL vendor="The Wilds" \
+      org.wilds.docker-vsftpd.version="0.1.0"
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
