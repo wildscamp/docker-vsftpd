@@ -1,10 +1,17 @@
 FROM debian:jessie
 
-RUN export DEBIAN_FRONTEND='noninteractive' && \
-    apt-get update -qq && \
-    apt-get install -qqy --no-install-recommends vsftpd libpam-pwdfile apache2-utils openssl vim && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/*
+MAINTAINER Joel Rowley <joel.rowley@wilds.org>
+
+ENV RELEASE_DATE 2016-08-25
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
+        libpam-pwdfile \
+        openssl \
+        vim \
+        vsftpd \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/*
 
 ENV LOG_FILE=/var/log/vsftpd.log \
     SSL=false \
@@ -13,9 +20,9 @@ ENV LOG_FILE=/var/log/vsftpd.log \
     DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
     USER_CONFIG_DIR=/etc/vsftpd/vusers
 
-RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual && \
-    echo "auth required pam_pwdfile.so pwdfile ${PASSWD_FILE}" > $PAM_FILE && \
-    echo "account required pam_permit.so" >> $PAM_FILE
+RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual \
+    && echo "auth required pam_pwdfile.so pwdfile ${PASSWD_FILE}" > $PAM_FILE \
+    && echo "account required pam_permit.so" >> $PAM_FILE
 
 COPY *.conf /etc/vsftpd/
 
