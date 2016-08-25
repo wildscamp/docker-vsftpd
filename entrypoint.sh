@@ -95,10 +95,10 @@ createuser() {
     echo "$username"
 }
 
-setftpusersetting() {
+setftpconfigsetting() {
     if [ $# -ne 3 ] || [ ! -e "$3" ]; then
-        echo "Set a setting for an FTP user."
-        echo "Usage: setftpusersetting <setting_hame> <setting_value> <user_config_file>"
+        echo "Set an FTP configuration setting in the given file."
+        echo "Usage: setftpconfigsetting <setting_hame> <setting_value> <config_file>"
 
         return 1
     fi
@@ -110,9 +110,9 @@ setftpusersetting() {
     fi
 }
 
-sed -i "s/^pasv_address=.*/pasv_address=$PASV_ADDRESS/" /etc/vsftpd/vsftpd.conf
-sed -i "s/^pasv_min_port=.*/pasv_min_port=$PASV_MIN_PORT/" /etc/vsftpd/vsftpd.conf
-sed -i "s/^pasv_max_port=.*/pasv_max_port=$PASV_MAX_PORT/" /etc/vsftpd/vsftpd.conf
+setftpconfigsetting "pasv_address" "$PASV_ADDRESS" /etc/vsftpd/vsftpd.conf
+setftpconfigsetting "pasv_min_port" "$PASV_MIN_PORT" /etc/vsftpd/vsftpd.conf
+setftpconfigsetting "pasv_max_port" "$PASV_MAX_PORT" /etc/vsftpd/vsftpd.conf
 
 # make sure the passwd file exists
 touch $PASSWD_FILE
@@ -187,10 +187,10 @@ for VARIABLE in $(env); do
             VSFTPD_USER_ID="$(getent passwd "$username" | cut -d':' -f3)"
         fi
 
-        setftpusersetting "guest_username" "$username" "$USER_CONFIG_FILE"
+        setftpconfigsetting "guest_username" "$username" "$USER_CONFIG_FILE"
 
         if [ -d "$VSFTPD_USER_HOME_DIR" ]; then
-            setftpusersetting "local_root" "$VSFTPD_USER_HOME_DIR" "$USER_CONFIG_FILE"
+            setftpconfigsetting "local_root" "$VSFTPD_USER_HOME_DIR" "$USER_CONFIG_FILE"
         else
             usersubtoken="$(cat "$USER_CONFIG_FILE" /etc/vsftpd/vsftpd.conf | grep -m1 -Gi "^user_sub_token=" | cut -d'=' -f2)"
             VSFTPD_USER_HOME_DIR="$(cat "$USER_CONFIG_FILE" /etc/vsftpd/vsftpd.conf | grep -m1 -Gi "^local_root=" | cut -d'=' -f2)"
