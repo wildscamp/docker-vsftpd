@@ -127,8 +127,8 @@ cat << EOB
 
  SERVER SETTINGS
  ---------------
- · Log file: $LOG_FILE
- · Redirect vsftpd log to STDOUT: No.
+ . Log file: $LOG_FILE
+ . Redirect vsftpd log to STDOUT: No.
 
 EOB
 
@@ -208,8 +208,8 @@ for VARIABLE in $(env); do
 cat << EOB
  USER SETTINGS
  ---------------
- · FTP User: $VSFTPD_USER_NAME
- · FTP Password: $VSFTPD_USER_PASS
+ . FTP User: $VSFTPD_USER_NAME
+ . FTP Password: $VSFTPD_USER_PASS
  . System User: $username
  . System UID: $VSFTPD_USER_ID
  . FTP Home Dir: $VSFTPD_USER_HOME_DIR
