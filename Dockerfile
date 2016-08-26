@@ -3,7 +3,7 @@ FROM debian:jessie
 MAINTAINER Joel Rowley <joel.rowley@wilds.org>
 
 LABEL vendor="The Wilds" \
-      org.wilds.docker-vsftpd.version="0.1.0"
+      org.wilds.docker-vsftpd.version="1.0.0"
 
 ENV DEBIAN_FRONTEND noninteractive
 
