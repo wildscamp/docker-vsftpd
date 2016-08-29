@@ -1,9 +1,9 @@
-# wildscamp/docker-vsftpd
+# FTP Server for Local Development Environments
 
-![docker_logo](https://googledrive.com/host/0B7q6BLMXak9VfkpQY3YzNldlSmtxRTZCMEtEVlhhR3QtMFc3aEYzVzA5YlM5MWw5OXhqV0U/docker_139x115.png)![docker_fauria_logo](https://avatars1.githubusercontent.com/u/11079956?v=3&s=115)
+![docker_logo](https://wilds.org/miscassets/logos/docker-small_v-trans-115.png)![docker_fauria_logo](https://avatars1.githubusercontent.com/u/11079956?v=3&s=115)
 
 **Disclaimer:** This container was created with a local development environment in mind and
-therefore may not be very secure. Use with public access at your own risk.
+therefore may not be very secure.
 
 This Docker container implements a vsftpd server, with the following features:
 
@@ -11,7 +11,7 @@ This Docker container implements a vsftpd server, with the following features:
  * Virtual users with the ability to specify home directory and system user ID
  * Passive mode
 
-### Installation from [Docker registry hub](https://registry.hub.docker.com/u/wilds/vsftpd/).
+### Installation from [Docker registry hub](https://hub.docker.com/r/wilds/vsftpd/).
 
 You can download the image with the following command:
 
