@@ -1,6 +1,6 @@
 # FTP Server for Local Development Environments
 
-![docker_logo](https://wilds.org/miscassets/logos/docker-small_v-trans-115.png)![docker_fauria_logo](https://avatars1.githubusercontent.com/u/11079956?v=3&s=115)
+![Docker Logo](https://www.gravatar.com/avatar/def8e498c0e2b4d1b0cb398ca164cddd?s=115) ![The Wilds Logo](https://www.gravatar.com/avatar/731d4f0ca8553a4f4b2a4f35d1d72280?s=115)
 
 **Disclaimer:** This container was created with a local development environment in mind and
 therefore may not be very secure.
@@ -11,13 +11,8 @@ This Docker container implements a vsftpd server, with the following features:
  * Virtual users with the ability to specify home directory and system user ID
  * Passive mode
 
-### Installation from [Docker registry hub](https://hub.docker.com/r/wilds/vsftpd/).
-
-You can download the image with the following command:
-
-```bash
-docker pull wilds/vsftpd
-```
+The compiled versions of this container can be found in the
+[Docker registry](https://hub.docker.com/r/wildscamp/vsftpd/).
 
 Environment variables
 ----
@@ -128,7 +123,7 @@ _Example_
        -e "PASV_ADDRESS=10.0.75.1" \
        -e "VSFTPD_USER_1=hello:world::" \
        -p "21:21" -p "30000-30009:30000-30009" \
-       -t wilds/vsftpd
+       -t wildscamp/vsftpd
   
   # start the application that uses the 'html-data' volume
   docker run --rm -i --name webapp \
@@ -152,7 +147,7 @@ Use cases
     -e "PASV_ADDRESS=10.0.75.1" \
     -e "VSFTPD_USER_1=hello:world::" \
     -p "21:21" -p "30000-30009:30000-30009" \
-    -t wilds/vsftpd
+    -t wildscamp/vsftpd
 ```
 
 2) Create multiple users with access to different volumes:
@@ -165,7 +160,7 @@ Use cases
     -e "VSFTPD_USER_1=hello:world:33:" \
     -e "VSFTPD_USER_1=mysql:mysql:999:" \
     -p "21:21" -p "30000-30009:30000-30009" \
-    -t wilds/vsftpd
+    -t wildscamp/vsftpd
 ```
 
 User Environment Variables and Docker Compose
@@ -182,7 +177,7 @@ as demonstrated here.
   services:
     vsftpd:
       container_name: vsftpd
-      image: wilds/vsftpd
+      image: wildscamp/vsftpd
       hostname: vsftpd
       ports:
         - "21:21"

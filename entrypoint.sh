@@ -120,8 +120,8 @@ touch $PASSWD_FILE
 cat << EOB
  *************************************************
  *                                               *
- *    Docker image: wilds/docker-vsftpd          *
- *    https://github.com/wilds/docker-vsftpd     *
+ *  Docker image: wildscamp/vsftpd               *
+ *  https://github.com/wildscamp/docker-vsftpd   *
  *                                               *
  *************************************************
 
