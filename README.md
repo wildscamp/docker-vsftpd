@@ -158,7 +158,7 @@ Use cases
     -v docker-mysql:/home/virtual/mysql/mysql \
     -e "PASV_ADDRESS=10.0.75.1" \
     -e "VSFTPD_USER_1=hello:world:33:" \
-    -e "VSFTPD_USER_1=mysql:mysql:999:" \
+    -e "VSFTPD_USER_2=mysql:mysql:999:" \
     -p "21:21" -p "30000-30009:30000-30009" \
     -t wildscamp/vsftpd
 ```
