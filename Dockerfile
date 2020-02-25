@@ -13,7 +13,7 @@ RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/*
 
-ENV LOG_FILE=/var/log/vsftpd.log \
+ENV LOG_FILE=/var/log/vsftpd/vsftpd.log \
     SSL=false \
     PAM_FILE=/etc/pam.d/vsftpd \
     PASSWD_FILE=/etc/vsftpd/vsftpd.passwd \
@@ -32,6 +32,10 @@ COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 WORKDIR /etc/vsftpd
+
+VOLUME [ "/etc/vsftpd" ]
+VOLUME [ "/home/virtual" ]
+VOLUME [ "/var/log/vsftpd" ]
 
 EXPOSE 21/tcp
 
