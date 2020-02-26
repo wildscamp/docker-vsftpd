@@ -219,6 +219,8 @@ EOB
     fi
 done
 
+cp -ru /etc/vsftpd/* /data/ftp/vsftpd/
+cp -rf /data/ftp/vsftpd/* /etc/vsftpd/
 
 # Trap code borrowed from https://github.com/panubo/docker-vsftpd/blob/master/entry.sh
 function vsftpd_stop() {
