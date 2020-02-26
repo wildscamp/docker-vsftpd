@@ -223,6 +223,7 @@ cp -u /etc/vsftpd/vsftpd.conf /data/ftp/vsftpd/
 cp -u /etc/vsftpd/vsftpd.passwd /data/ftp/vsftpd/
 cp -ru /etc/vsftpd/vusers /data/ftp/vsftpd/
 cp -rf /data/ftp/vsftpd/* /etc/vsftpd/
+chown -R ftp:ftp /home/virtual
 
 # Trap code borrowed from https://github.com/panubo/docker-vsftpd/blob/master/entry.sh
 function vsftpd_stop() {
