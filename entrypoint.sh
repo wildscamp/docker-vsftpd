@@ -247,5 +247,3 @@ if [ "$1" == "vsftpd" ]; then
 else
   exec "$@"
 fi
-
-copy -rf /data/ftp/vsftpd/* /etc/vsftpd/
