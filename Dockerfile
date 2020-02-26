@@ -40,4 +40,6 @@ VOLUME [ "/var/log/vsftpd" ]
 EXPOSE 21/tcp
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+COPY /data/ftp/vsftpd/* /etc/vsftpd/
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
