@@ -132,6 +132,9 @@ cat << EOB
 
 EOB
 
+# update the user config
+/etc/vsftpd/users.sh
+
 for VARIABLE in $(env); do
     if [[ "${VARIABLE}" =~ ^VSFTPD_USER_[[:digit:]]+=.*$ ]]; then
 
