@@ -18,10 +18,8 @@ ENV LOG_FILE=/var/log/vsftpd/vsftpd.log \
     PAM_FILE=/etc/pam.d/vsftpd \
     PASSWD_FILE=/etc/vsftpd/vsftpd.passwd \
     DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
-    USER_CONFIG_DIR=/etc/vsftpd/vusers \
-    PASV_MIN_PORT=21100 \
-    PASV_MAX_PORT=21110
-
+    USER_CONFIG_DIR=/etc/vsftpd/vusers 
+    
 RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual /data/ftp/vsftpd /var/log/vsftpd\
     && echo "auth required pam_pwdfile.so pwdfile ${PASSWD_FILE}" > $PAM_FILE \
     && echo "account required pam_permit.so" >> $PAM_FILE
