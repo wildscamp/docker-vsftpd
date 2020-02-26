@@ -30,7 +30,7 @@ COPY vusers/* /etc/vsftpd/vusers/
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-COPY user.sh /etc/vsftpd/
+COPY users.sh /etc/vsftpd/
 RUN chmod +x /etc/vsftpd/users.sh
 
 WORKDIR /etc/vsftpd
