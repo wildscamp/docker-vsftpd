@@ -22,21 +22,18 @@ ENV LOG_FILE=/var/log/vsftpd/vsftpd.log \
 
 RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual/share /data/ftp/vsftpd /var/log/vsftpd\
     && echo "auth required pam_pwdfile.so pwdfile ${PASSWD_FILE}" > $PAM_FILE \
-    && echo "account required pam_permit.so" >> $PAM_FILE \
-    && cp  *.conf /etc/vsftpd/ && cp vsftpd.conf /data/ftp/vsftpd && cp -r vusers /data/ftp/vsftpd \
-    && cp  userlist /etc/vsftpd && cp entrypoint.sh / && chmod +x /entrypoint.sh \
-    && cp users.sh /data/ftp/vsftpd && chmod +x /data/ftp/vsftpd/users.sh
+    && echo "account required pam_permit.so" >> $PAM_FILE 
 
-# COPY *.conf /etc/vsftpd/
-# COPY vsftpd.conf /data/ftp/vsftpd
-# COPY vusers /data/ftp/vsftpd
-# COPY userlist /etc/vsftpd
+COPY *.conf /etc/vsftpd/
+COPY vsftpd.conf /data/ftp/vsftpd
+COPY vusers /data/ftp/vsftpd
+COPY userlist /etc/vsftpd
 
-# COPY entrypoint.sh /
-# RUN chmod +x /entrypoint.sh
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-# COPY users.sh /data/ftp/vsftpd
-# RUN chmod +x /data/ftp/vsftpd/users.sh
+COPY users.sh /data/ftp/vsftpd
+RUN chmod +x /data/ftp/vsftpd/users.sh
 
 WORKDIR /etc/vsftpd
 
