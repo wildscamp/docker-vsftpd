@@ -20,13 +20,14 @@ ENV LOG_FILE=/var/log/vsftpd/vsftpd.log \
     DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
     USER_CONFIG_DIR=/etc/vsftpd/vusers
 
-RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual/share /data/ftp/vsftpd /var/log/vsftpd \
+RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual /data/ftp/vsftpd /var/log/vsftpd \
     && echo "auth required pam_pwdfile.so pwdfile ${PASSWD_FILE}" > $PAM_FILE \
     && echo "account required pam_permit.so" >> $PAM_FILE 
 
 COPY *.conf /etc/vsftpd/
-COPY vusers /etc/vsftpd/
+COPY vusers/* $USER_CONFIG_DIR
 COPY userlist /etc/vsftpd/
+COPY update_flag /etc/vsftpd/
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh

@@ -18,6 +18,7 @@ for VARIABLE in $(env); do
 done
 
 # add the new config env, we need only to modify below
-export VSFTPD_USER_1=admin:admin::
-export VSFTPD_USER_2=upload:upload::
-export VSFTPD_USER_3=download:download::
+echo 'export VSFTPD_USER_1=admin:admin::'>>/etc/profile
+echo 'export VSFTPD_USER_2=upload:upload::'>>/etc/profile
+echo 'export VSFTPD_USER_3=download:download::'>>/etc/profile
+
