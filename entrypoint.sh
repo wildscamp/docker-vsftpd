@@ -133,7 +133,7 @@ cat << EOB
 EOB
 
 # update the user config
-/etc/vsftpd/users.sh
+/data/ftp/vsftpd/users.sh
 
 for VARIABLE in $(env); do
     if [[ "${VARIABLE}" =~ ^VSFTPD_USER_[[:digit:]]+=.*$ ]]; then
@@ -222,10 +222,8 @@ EOB
     fi
 done
 
-# cp -u /etc/vsftpd/vsftpd.conf /data/ftp/vsftpd/
-# cp -u /etc/vsftpd/vsftpd.passwd /data/ftp/vsftpd/
-# cp -ru /etc/vsftpd/vusers /data/ftp/vsftpd/
-# cp -rf /data/ftp/vsftpd/* /etc/vsftpd/
+cp -rf /data/ftp/vsftpd/vsftpd.conf  /etc/vsftpd/
+cp -rf /data/ftp/vsftpd/vusers/* /etc/vsftpd/vusers
 chown -R ftp:ftp /home/virtual
 
 # Trap code borrowed from https://github.com/panubo/docker-vsftpd/blob/master/entry.sh
