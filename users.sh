@@ -6,9 +6,9 @@ for VARIABLE in $(env); do
 		ENV_VAL="$(echo ${VARIABLE} | cut -d'=' -f2)"
 		
 		if [ "$(echo ${ENV_VAL} | awk -F ':' '{ print NF }')" -ne 4 ]; then
-            		echo "'${ENV_VAL}' user has invalid syntax. Skipping."
-            		continue
-        	fi
+        	echo "'${ENV_VAL}' user has invalid syntax. Skipping."
+            continue
+        fi
 		ENV_NAME="$(echo ${VARIABLE} | cut -d'=' -f1)"
 		ENV_NAME=`eval echo '$'"${ENV_NAME}"`
 		echo $ENV_NAME

@@ -132,8 +132,20 @@ cat << EOB
 
 EOB
 
-# update the user config
-/data/ftp/vsftpd/users.sh
+flag=$(cat /data/ftp/vsftpd/update_flag)
+if [ $flag == '1' ];then
+    echo 'the config is update'
+    cp /data/ftp/vsftpd/vsftpd.conf /etc/vsftpd
+    cp /data/ftp/vsftpd/userlist /etc/vsftpd
+    cp /data/ftp/vsftpd/users.sh /etc/vsftpd
+    cp -rf /data/ftp/vsftpd/vusers /etc/vsftpd
+    chmod +x /etc/vsftpd/users.sh
+    
+    # update the user config
+    /etc/vsftpd/users.sh
+
+    echo '0' > /data/ftp/vsftpd/update_flag
+fi
 
 for VARIABLE in $(env); do
     if [[ "${VARIABLE}" =~ ^VSFTPD_USER_[[:digit:]]+=.*$ ]]; then
@@ -222,8 +234,11 @@ EOB
     fi
 done
 
-cp -rf /data/ftp/vsftpd/vsftpd.conf  /etc/vsftpd/
-cp -rf /data/ftp/vsftpd/vusers/* /etc/vsftpd/vusers
+cp -f /etc/vsftpd/vsftpd.conf /data/ftp/vsftpd
+cp -f /etc/vsftpd/userlist /data/ftp/vsftpd
+cp -f /etc/vsftpd/users.sh /data/ftp/vsftpd
+cp -rf /etc/vsftpd/vusers  /data/ftp/vsftpd
+
 chown -R ftp:ftp /home/virtual
 
 # Trap code borrowed from https://github.com/panubo/docker-vsftpd/blob/master/entry.sh
