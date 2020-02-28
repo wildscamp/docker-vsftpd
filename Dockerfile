@@ -25,7 +25,7 @@ RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual /d
     && echo "account required pam_permit.so" >> $PAM_FILE 
 
 COPY *.conf /etc/vsftpd/
-COPY vusers/* $USER_CONFIG_DIR
+COPY vusers/* /etc/vsftpd/vusers/
 COPY update_flag /etc/vsftpd/
 
 COPY entrypoint.sh /
