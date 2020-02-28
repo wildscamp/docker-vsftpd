@@ -114,18 +114,14 @@ flag=$(cat /data/ftp/vsftpd/update_flag)
 if [ $flag == '1' ];then
     echo 'the config is update'
     cp -f /data/ftp/vsftpd/vsftpd.conf /etc/vsftpd
-    cp -f /data/ftp/vsftpd/userlist /etc/vsftpd
-    cp -f /data/ftp/vsftpd/users.sh /etc/vsftpd
-    cp -rf /data/ftp/vsftpd/vusers /etc/vsftpd
-    chmod +x /etc/vsftpd/users.sh
-
-    # update the user config
-    /bin/bash /etc/vsftpd/users.sh
-    source /etc/profile
-
+    rm -rf /etc/vsftpd/vusers/*
+    cp -rf /data/ftp/vsftpd/vusers/* /etc/vsftpd/vusers
+    rm -rf /etc/vsftpd/vsftpd.passwd
+    
+    `eval cat /data/ftp/vsftpd/users.sh`
+    #env
     echo '0' > /data/ftp/vsftpd/update_flag
 fi
-
 
 setftpconfigsetting "pasv_address" "$PASV_ADDRESS" /etc/vsftpd/vsftpd.conf
 setftpconfigsetting "pasv_min_port" "$PASV_MIN_PORT" /etc/vsftpd/vsftpd.conf
@@ -183,7 +179,7 @@ for VARIABLE in $(env); do
 
         USER_CONFIG_FILE="${USER_CONFIG_DIR}/${VSFTPD_USER_NAME}"
 
-        #cp $DEFAULT_USER_CONFIG "$USER_CONFIG_FILE"
+        cp -u $DEFAULT_USER_CONFIG "$USER_CONFIG_FILE"
 
         # pull the default username from the config file
         username="$(grep -Gi '^guest_username=' "$USER_CONFIG_FILE" | cut -d'=' -f2)"
@@ -237,13 +233,12 @@ EOB
 done
 
 cp -f /etc/vsftpd/vsftpd.conf /data/ftp/vsftpd
-cp -f /etc/vsftpd/userlist /data/ftp/vsftpd
-cp -f /etc/vsftpd/users.sh /data/ftp/vsftpd
+cp -u /etc/vsftpd/users.sh /data/ftp/vsftpd
 cp -rf /etc/vsftpd/vusers  /data/ftp/vsftpd
 cp -u /etc/vsftpd/update_flag /data/ftp/vsftpd
 
 chown -R ftp:ftp /home/virtual
-mkdir /home/virtual/share
+mkdir -p /home/virtual/share
 chmod -R a+r /home/virtual
 chmod -R a-w /home/virtual/share
 
