@@ -182,7 +182,7 @@ docker restart vsfptd
   -v /data/ftp/vsftpd:/data/ftp/vsftpd \
   -v /data/ftp/log:/var/log/vsftpd \
   -e "PASV_ADDRESS=1.1.1.1" \
-  -e "PASV_MIN_PORT=21100" -e "PASV_MAX_PORT=21110" \
+  -e "PASV_MIN_PORT=30000" -e "PASV_MAX_PORT=30009" \
   -p "21:21" -p "30000-30009:30000-30009" \
   -t wildscamp/vsftpd
 ```
