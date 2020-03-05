@@ -62,6 +62,7 @@ _Common Values_
 |--------------------|----------------|---------------------------|
 | Docker for Windows | 10.0.75.1      | Default Hyper-V host IP   |
 | boot2docker        | 192.168.99.100 | Default docker-machine IP |
+| vps                | xxx.xxx.xxx.xxx | your vps's internet ipv4 addr|
 
 ----
 
@@ -163,6 +164,28 @@ Use cases
     -t wildscamp/vsftpd
 ```
 
+3) Create multiple users with local different config adn different access:
+- step 1: modify the users.sh to add the user who you want
+- step 2: add or modify the [username] file, edit the access options, and you can refor to the demo file
+- step 3: set the update flag, [0] not update, [1]updated. 
+```
+echo '1'>update_flag
+```
+- step 4: restart the docker:
+```
+docker restart vsfptd
+```
+
+```bash
+  docker run -d --name vsftpd -i  \
+  -v /data/ftp/files:/home/virtual \
+  -v /data/ftp/vsftpd:/data/ftp/vsftpd \
+  -v /data/ftp/log:/var/log/vsftpd \
+  -e "PASV_ADDRESS=1.1.1.1" \
+  -e "PASV_MIN_PORT=21100" -e "PASV_MAX_PORT=21110" \
+  -p "21:21" -p "30000-30009:30000-30009" \
+  -t wildscamp/vsftpd
+```
 User Environment Variables and Docker Compose
 ----
 
