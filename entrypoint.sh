@@ -110,6 +110,19 @@ setftpconfigsetting() {
     fi
 }
 
+flag=$(cat /data/ftp/vsftpd/update_flag)
+if [ $flag == '1' ];then
+    echo 'the config is update'
+    cp -f /data/ftp/vsftpd/vsftpd.conf /etc/vsftpd
+    rm -rf /etc/vsftpd/vusers/*
+    cp -rf /data/ftp/vsftpd/vusers/* /etc/vsftpd/vusers
+    rm -rf /etc/vsftpd/vsftpd.passwd
+    
+    `eval cat /data/ftp/vsftpd/users.sh`
+    #env
+    echo '0' > /data/ftp/vsftpd/update_flag
+fi
+
 setftpconfigsetting "pasv_address" "$PASV_ADDRESS" /etc/vsftpd/vsftpd.conf
 setftpconfigsetting "pasv_min_port" "$PASV_MIN_PORT" /etc/vsftpd/vsftpd.conf
 setftpconfigsetting "pasv_max_port" "$PASV_MAX_PORT" /etc/vsftpd/vsftpd.conf
@@ -166,7 +179,7 @@ for VARIABLE in $(env); do
 
         USER_CONFIG_FILE="${USER_CONFIG_DIR}/${VSFTPD_USER_NAME}"
 
-        cp $DEFAULT_USER_CONFIG "$USER_CONFIG_FILE"
+        cp -u $DEFAULT_USER_CONFIG "$USER_CONFIG_FILE"
 
         # pull the default username from the config file
         username="$(grep -Gi '^guest_username=' "$USER_CONFIG_FILE" | cut -d'=' -f2)"
@@ -187,7 +200,7 @@ for VARIABLE in $(env); do
             VSFTPD_USER_ID="$(getent passwd "$username" | cut -d':' -f3)"
         fi
 
-        setftpconfigsetting "guest_username" "$username" "$USER_CONFIG_FILE"
+        #setftpconfigsetting "guest_username" "$username" "$USER_CONFIG_FILE"
 
         if [ -d "$VSFTPD_USER_HOME_DIR" ]; then
             setftpconfigsetting "local_root" "$VSFTPD_USER_HOME_DIR" "$USER_CONFIG_FILE"
@@ -219,6 +232,15 @@ EOB
     fi
 done
 
+cp -f /etc/vsftpd/vsftpd.conf /data/ftp/vsftpd
+cp -u /etc/vsftpd/users.sh /data/ftp/vsftpd
+cp -rf /etc/vsftpd/vusers  /data/ftp/vsftpd
+cp -u /etc/vsftpd/update_flag /data/ftp/vsftpd
+
+chown -R ftp:ftp /home/virtual
+mkdir -p /home/virtual/share
+chmod -R a+r /home/virtual
+chmod -R a-w /home/virtual/share
 
 # Trap code borrowed from https://github.com/panubo/docker-vsftpd/blob/master/entry.sh
 function vsftpd_stop() {
