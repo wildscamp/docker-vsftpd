@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian
 
 LABEL vendor="The Wilds" \
       org.wilds.docker-vsftpd.version="1.0.3"
