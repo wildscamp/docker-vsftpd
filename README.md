@@ -119,7 +119,7 @@ _Example_
   
   # start the FTP daemon connected to the 'html-data' volume
   docker run --rm -d --name vsftpd \
-       -v html-data:/home/virtual/user1/html \
+       -v html-data:/home/virtual/hello/html \
        -e "PASV_ADDRESS=10.0.75.1" \
        -e "VSFTPD_USER_1=hello:world::" \
        -p "21:21" -p "30000-30009:30000-30009" \

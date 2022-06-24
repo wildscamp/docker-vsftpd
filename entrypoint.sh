@@ -155,10 +155,10 @@ for VARIABLE in $(env); do
 
         # add the user credentials to the vsftpd.passwd file
         entry="${VSFTPD_USER_NAME}:$(openssl passwd -1 "${VSFTPD_USER_PASS}")"
-        sedr="s~^${VSFTPD_USER_NAME}.*~${entry}~"
+        sedr="s~^${VSFTPD_USER_NAME}:.*~${entry}~"
 
         # check if the user exists already in the file
-        if [ ! -z "$(grep -G -i "^${VSFTPD_USER_NAME}" $PASSWD_FILE)" ]; then
+        if [ ! -z "$(grep -G -i "^${VSFTPD_USER_NAME}:" $PASSWD_FILE)" ]; then
             sed -i "${sedr}" $PASSWD_FILE
         else
             printf "%s:%s\n" "$VSFTPD_USER_NAME" "$(openssl passwd -1 "$VSFTPD_USER_PASS")" >> "$PASSWD_FILE"

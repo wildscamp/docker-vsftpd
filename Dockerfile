@@ -1,9 +1,8 @@
-FROM debian:jessie
-
-MAINTAINER Joel Rowley <joel.rowley@wilds.org>
+FROM debian
 
 LABEL vendor="The Wilds" \
-      org.wilds.docker-vsftpd.version="1.0.3"
+      org.wilds.docker-vsftpd.version="2.0.0" \
+      org.wilds.image.authors="Joel Rowley <joel.rowley@wilds.org>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
