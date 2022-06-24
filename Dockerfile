@@ -1,8 +1,8 @@
 FROM debian
 
 LABEL vendor="The Wilds" \
-      org.wilds.docker-vsftpd.version="1.0.3"
-      org.wilds.image.authors="Joel Rowley <joel.rowley@wilds.org>" \
+      org.wilds.docker-vsftpd.version="1.0.3" \
+      org.wilds.image.authors="Joel Rowley <joel.rowley@wilds.org>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
