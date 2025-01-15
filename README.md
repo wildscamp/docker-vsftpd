@@ -77,7 +77,7 @@ _Common Values_
 
 * **Default value:** 30009
 * **Accepted values:** an integer that is greater than `PASV_MIN_PORT`.
-* **Description:** The minimum port to use for passive connections.
+* **Description:** The maximum port to use for passive connections.
 
 Ports
 ----
