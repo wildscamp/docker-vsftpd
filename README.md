@@ -18,20 +18,20 @@ following core features:
 The pre-built image can be found on the **Docker registry** at
 [`alexs77/vsftpd`](https://hub.docker.com/r/alexs77/vsftpd).
 
-## **Attribution**
+## Attribution
 
 This work is based on the foundation laid by
 **[wildscamp/docker-vsftpd](https://github.com/wildscamp/docker-vsftpd)**.
 For reference, their Docker registry page is available at
 **[`wildscamp/vsftpd`](https://hub.docker.com/r/wildscamp/vsftpd/)**.
 
-## **Table of Contents**
+## Table of Contents
 
 - [`vsftpd` FTP Server for Docker](#vsftpd-ftp-server-for-docker)
-  - [**Attribution**](#attribution)
-  - [**Table of Contents**](#table-of-contents)
-  - [**Configuration**](#configuration)
-    - [**Environment Variables**](#environment-variables)
+  - [Attribution](#attribution)
+  - [Table of Contents](#table-of-contents)
+  - [Configuration](#configuration)
+    - [Environment Variables](#environment-variables)
       - [`VSFTPD_USER_[0-9]+`](#vsftpd_user_0-9)
         - [Examples](#examples)
         - [Caveats](#caveats)
@@ -39,20 +39,20 @@ For reference, their Docker registry page is available at
         - [Common Values](#common-values)
       - [`PASV_MIN_PORT`](#pasv_min_port)
       - [`PASV_MAX_PORT`](#pasv_max_port)
-  - [**Ports**](#ports)
-  - [**Volumes**](#volumes)
-    - [**Considerations**](#considerations)
-    - [**Named Volumes**](#named-volumes)
-  - [**Example Deployment**](#example-deployment)
-  - [**Using Environment Variables with Docker Compose**](#using-environment-variables-with-docker-compose)
-  - [**Links**](#links)
+  - [Ports](#ports)
+  - [Volumes](#volumes)
+    - [Considerations](#considerations)
+    - [Named Volumes](#named-volumes)
+  - [Example Deployment](#example-deployment)
+  - [Using Environment Variables with Docker Compose](#using-environment-variables-with-docker-compose)
+  - [Links](#links)
 
-## **Configuration**
+## Configuration
 
 This image supports run-time configuration via standard
 **environment variables**.
 
-### **Environment Variables**
+### Environment Variables
 
 #### `VSFTPD_USER_[0-9]+`
 
@@ -126,7 +126,7 @@ arbitrary number of virtual FTP users.
 - **Description:** The maximum port number to be used for passive
     connections.
 
-## **Ports**
+## Ports
 
 The container exposes the following ports:
 
@@ -142,7 +142,7 @@ When running the container, ensure all necessary ports are published
 to your host machine using the `-p` flag or in your
 `docker-compose.yaml`.
 
-## **Volumes**
+## Volumes
 
 For the FTP server to be useful, a minimum of one data volume should
 be mounted.
@@ -160,7 +160,7 @@ be mounted.
     overridden by mounting a file to
     `/etc/vsftpd/default_user.conf`.
 
-### **Considerations**
+### Considerations
 
 When mounting host folders, the directory mounted must possess the
 correct permissions. The directory owner/group IDs on the host must
@@ -169,7 +169,7 @@ operating under. For instance, if `VSFTPD_USER_1=user1:pass:33:` is
 defined, any mounted folders must be owned by the user with UID `33`
 on the host for the FTP user to access them.
 
-### **Named Volumes**
+### Named Volumes
 
 Using **named volumes** offers a significant performance advantage
 over direct host-to-container shared folder mounting. Named volumes
@@ -177,7 +177,7 @@ are fully supported and can be concurrently attached to multiple
 containers, enabling data sharing between this FTP server and other
 application containers (e.g., a web server or database).
 
-## **Example Deployment**
+## Example Deployment
 
 A simple deployment, using the default user configuration, can be
 launched with `docker run` :
@@ -223,7 +223,7 @@ volumes:
     external: true
 ```
 
-## **Using Environment Variables with Docker Compose**
+## Using Environment Variables with Docker Compose
 
 A crucial consideration for the **`VSFTPD_USER_[0-9]+`** environment
 variables within a `docker-compose.yaml` is the optional nature of
@@ -247,7 +247,7 @@ environment variables, as illustrated below, or use an external
         # Note the quotes around the value to prevent YAML parsing errors.
 ```
 
-## **Links**
+## Links
 
 - **GitHub Repository:**
     [`alexs77/docker-vsftpd`](https://github.com/alexs77/docker-vsftpd)
