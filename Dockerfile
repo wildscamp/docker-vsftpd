@@ -34,7 +34,9 @@ COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 WORKDIR /etc/vsftpd
 
+EXPOSE 20/tcp
 EXPOSE 21/tcp
+EXPOSE 30000-30009/tcp
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
