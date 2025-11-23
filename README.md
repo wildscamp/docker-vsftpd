@@ -1,57 +1,70 @@
 # FTP Server for Local Development Environments
 
-![Docker Logo](https://www.gravatar.com/avatar/def8e498c0e2b4d1b0cb398ca164cddd?s=115)
+![Docker
+Logo](https://www.gravatar.com/avatar/def8e498c0e2b4d1b0cb398ca164cddd?s=115)
 
-**Disclaimer:** This container was created with a local development environment in mind and
-therefore may not be very secure.
+**Disclaimer:** This container was created with a local development
+environment in mind and therefore may not be very secure.
 
-This Docker container implements a vsftpd server, with the following features:
+This Docker container implements a vsftpd server, with the following
+features:
 
 * Debian:jesse base image.
-* Virtual users with the ability to specify home directory and system user ID
+* Virtual users with the ability to specify home directory and system
+  user ID
 * Passive mode
 
-The compiled versions of this container can be found in the
-[Docker registry](https://hub.docker.com/r/wildscamp/vsftpd/).
+The compiled versions of this container can be found in the [Docker
+registry](https://hub.docker.com/r/wildscamp/vsftpd/).
 
 ## Environment variables
 
-This image uses environment variables to allow the configuration of some parameters at run time:
+This image uses environment variables to allow the configuration of some
+parameters at run time:
 
 ### `VSFTPD_USER_[0-9]+`
 
-* **Accepted values:** A string in the format `<username>:<password>:<system_uid>:<ftp_root_dir>`.
-  The `<system_uid>` and `<ftp_root_dir>` are optional, but the separating colons must still
-  exist.
-* **Description:** These are compound variables that allow for addition of any number of users.
+* **Accepted values:** A string in the format
+  `<username>:<password>:<system_uid>:<ftp_root_dir>`. The
+  `<system_uid>` and `<ftp_root_dir>` are optional, but the separating
+  colons must still exist.
+* **Description:** These are compound variables that allow for addition
+  of any number of users.
 
 #### Examples
 
-* `VSFTPD_USER_1=hello:world::` - Create a user named **hello** with a password of **world**. The
-  system user's UID will be the same as that of the built-in `ftp` account (UID: `104`) and
-  the FTP user's root directory will default to `/home/virtual/hello`.
-* `VSFTPD_USER_1=user1:docker:33:` - Create a user named **user1** with a password of **docker**. The
-  system user's UID will be **33** and the FTP user's root directory will default to
-  `/home/virtual/user1`. If a system user with that ID already exists, vsftpd will tie that
-  existing user to this user.
-* `VSFTPD_USER_1=mysql:mysql:999:/srv/ftp/mysql` - Create a user named **mysql** with a password
-  of **mysql**. The system user's UID will be **999** and the FTP user's root directory will be
-  set to `/srv/ftp/mysql`.
+* `VSFTPD_USER_1=hello:world::` - Create a user named **hello** with a
+  password of **world**. The system user's UID will be the same as that
+  of the built-in `ftp` account (UID: `104`) and the FTP user's root
+  directory will default to `/home/virtual/hello`.
+* `VSFTPD_USER_1=user1:docker:33:` - Create a user named **user1** with
+  a password of **docker**. The system user's UID will be **33** and the
+  FTP user's root directory will default to `/home/virtual/user1`. If a
+  system user with that ID already exists, vsftpd will tie that existing
+  user to this user.
+* `VSFTPD_USER_1=mysql:mysql:999:/srv/ftp/mysql` - Create a user named
+  **mysql** with a password of **mysql**. The system user's UID will be
+  **999** and the FTP user's root directory will be set to
+  `/srv/ftp/mysql`.
 
 #### Caveats
 
-* vsftpd apparently has special handling of an FTP user with the name `ftp`, so it's
-  recommended to not use this name when defining an FTP user.
+* vsftpd apparently has special handling of an FTP user with the name
+  `ftp`, so it's recommended to not use this name when defining an FTP
+  user.
 
 ### `PASV_ADDRESS`
 
-* **Accepted values:** DNS name or IP address that you use to FTP into this container.
-* **Description:** This tells vsftpd which address to advertise to FTP clients as its address
-  for passive connections. It's recommended to set this as an IP address since the container
-  may not have the same DNS lookup settings as the Docker host.
-* **Note:** If this is not specified, FTP communication most likely will not work as vsftpd
-  will automatically use the IP of the interface on which the connection was received and that
-  IP will usually be internal to the docker container.
+* **Accepted values:** DNS name or IP address that you use to FTP into
+  this container.
+* **Description:** This tells vsftpd which address to advertise to FTP
+  clients as its address for passive connections. It's recommended to
+  set this as an IP address since the container may not have the same
+  DNS lookup settings as the Docker host.
+* **Note:** If this is not specified, FTP communication most likely will
+  not work as vsftpd will automatically use the IP of the interface on
+  which the connection was received and that IP will usually be internal
+  to the docker container.
 
 #### Common Values
 
@@ -76,33 +89,40 @@ This image uses environment variables to allow the configuration of some paramet
 
 ### Ports
 
-vsftpd is configured to listen on port `21`. The container will need to open that port up as well
-as the range of passive ports (defaults of `30000-30009`).
+vsftpd is configured to listen on port `21`. The container will need to
+open that port up as well as the range of passive ports (defaults of
+`30000-30009`).
 
 ### Volumes
 
-By default, a user is given an FTP home directory of `/home/virtual/${username}`. Any volumes
-that you want a user to access should be mounted underneath the user's home folder.
+By default, a user is given an FTP home directory of
+`/home/virtual/${username}`. Any volumes that you want a user to access
+should be mounted underneath the user's home folder.
 
 ### Considerations
 
-1. It's important that these are not mounted directly to the user's home directory but instead
-   to a sub-directory of the user's home directory. The reason for this is because the user
-   does not have write permissions in the root of their home directory.
-2. Any folder that is mounted must already have the same permissions as the system user that
-   the FTP user is operating under. So, if the we define a `VSFTPD_USER_1=user1:pass:33:`, then
-   the mounted folders must be owned by a user with ID of `33` for the FTP user to access it.
+1. It's important that these are not mounted directly to the user's home
+   directory but instead to a sub-directory of the user's home
+   directory. The reason for this is because the user does not have
+   write permissions in the root of their home directory.
+2. Any folder that is mounted must already have the same permissions as
+   the system user that the FTP user is operating under. So, if the we
+   define a `VSFTPD_USER_1=user1:pass:33:`, then the mounted folders
+   must be owned by a user with ID of `33` for the FTP user to access
+   it.
 
 ### Named Volumes
 
-Folders that are mounted directly from the host computer are orders of magnitude slower than
-named volumes. That is one of the reasons (a big one) to use named volumes instead of shared
-folders from the host.
+Folders that are mounted directly from the host computer are orders of
+magnitude slower than named volumes. That is one of the reasons (a big
+one) to use named volumes instead of shared folders from the host.
 
-Named volumes work nicely with this container. Docker supports the ability to mount the same
-named volumes to multiple containers at the same time. So, your application data is stored
-in a named volume and that same volume can be attached to this container to present FTP
-access to that data. That is one of the main reasons this container was created.
+Named volumes work nicely with this container. Docker supports the
+ability to mount the same named volumes to multiple containers at the
+same time. So, your application data is stored in a named volume and
+that same volume can be attached to this container to present FTP access
+to that data. That is one of the main reasons this container was
+created.
 
 ## Example
 
@@ -124,13 +144,15 @@ access to that data. That is one of the main reasons this container was created.
        -t debian:jesse /bin/bash
 ```
 
-You'll notice that both containers are given the same named volume but mounted in different
-locations. If one container changed something in the named volume, that change will be
-reflected in the other container.
+You'll notice that both containers are given the same named volume but
+mounted in different locations. If one container changed something in
+the named volume, that change will be reflected in the other container.
 
 ## Use cases
 
-1. Spin up an the FTP server with a user named **hello**, password of **world** and mount a named volume under **hello**'s FTP root directory:
+1. Spin up an the FTP server with a user named **hello**, password of
+   **world** and mount a named volume under **hello**'s FTP root
+   directory:
 
 ```bash
   docker run --rm --name vsftpd -i \
@@ -156,12 +178,13 @@ reflected in the other container.
 
 ## User Environment Variables and Docker Compose
 
-There is one special consideration regarding the `VSFTPD_USER_[0-9]+` environment variables
-and Docker Compose. If you do not specify a root directory in a user configuration variable,
-the variable will end with a `:` and that has special meaning in a YAML file. In this case,
-it is necessary to define the environment variables using the
-[dictionary method](https://docs.docker.com/compose/compose-file/#/environment)
-as demonstrated here.
+There is one special consideration regarding the `VSFTPD_USER_[0-9]+`
+environment variables and Docker Compose. If you do not specify a root
+directory in a user configuration variable, the variable will end with a
+`:` and that has special meaning in a YAML file. In this case, it is
+necessary to define the environment variables using the [dictionary
+method](https://docs.docker.com/compose/compose-file/#/environment) as
+demonstrated here.
 
 ```yaml
   services:
