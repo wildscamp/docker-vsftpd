@@ -1,9 +1,5 @@
 FROM debian
 
-LABEL vendor="The Wilds" \
-      org.wilds.docker-vsftpd.version="2.0.0" \
-      org.wilds.image.authors="Joel Rowley <joel.rowley@wilds.org>"
-
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \

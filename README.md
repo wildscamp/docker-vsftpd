@@ -15,7 +15,12 @@ features:
 * Passive mode
 
 The compiled versions of this container can be found in the [Docker
-registry](https://hub.docker.com/r/wildscamp/vsftpd/).
+registry](https://hub.docker.com/r/<tbd>/).
+
+It is based on the work of
+[wildscamp/docker-vsftpd](https://github.com/wildscamp/docker-vsftpd).
+See also their Docker registry page at
+[wildscamp/vsftpd](https://hub.docker.com/r/wildscamp/vsftpd/).
 
 ## Environment variables
 
@@ -207,3 +212,12 @@ demonstrated here.
         VSFTPD_USER_2: 'mysql:mysql:999:'
         VSFTPD_USER_3: 'certs:certs:50:'
 ```
+
+## Links
+
+* [vsftpd](https://security.appspot.com/vsftpd.html) - Very Secure FTP
+  Daemon
+* [Docker Hub Repository](https://hub.docker.com/r/<tbd>/)
+* [GitHub Repository](https://github.com/<tbd>/)
+
+----
