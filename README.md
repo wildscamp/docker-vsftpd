@@ -1,6 +1,6 @@
 # FTP Server for Local Development Environments
 
-![Docker Logo](https://www.gravatar.com/avatar/def8e498c0e2b4d1b0cb398ca164cddd?s=115) ![The Wilds Logo](https://www.gravatar.com/avatar/731d4f0ca8553a4f4b2a4f35d1d72280?s=115)
+![Docker Logo](https://www.gravatar.com/avatar/def8e498c0e2b4d1b0cb398ca164cddd?s=115)
 
 **Disclaimer:** This container was created with a local development environment in mind and
 therefore may not be very secure.
@@ -19,7 +19,7 @@ Environment variables
 
 This image uses environment variables to allow the configuration of some parameters at run time:
 
-`VSFTP_USER_[0-9]+`
+`VSFTPD_USER_[0-9]+`
 
 * **Accepted values:** A string in the format `<username>:<password>:<system_uid>:<ftp_root_dir>`.
   The `<system_uid>` and `<ftp_root_dir>` are optional, but the separating colons must still
@@ -28,14 +28,14 @@ This image uses environment variables to allow the configuration of some paramet
 
 _Examples_
 
-* `VSFTP_USER_1=hello:world::` - Create a user named **hello** with a password of **world**. The
+* `VSFTPD_USER_1=hello:world::` - Create a user named **hello** with a password of **world**. The
   system user's UID will be the same as that of the built-in `ftp` account (UID: `104`) and
   the FTP user's root directory will default to `/home/virtual/hello`.
-* `VSFTP_USER_1=user1:docker:33:` - Create a user named **user1** with a password of **docker**. The
+* `VSFTPD_USER_1=user1:docker:33:` - Create a user named **user1** with a password of **docker**. The
   system user's UID will be **33** and the FTP user's root directory will default to
   `/home/virtual/user1`. If a system user with that ID already exists, vsftpd will tie that
   existing user to this user.
-* `VSFTP_USER_1=mysql:mysql:999:/srv/ftp/mysql` - Create a user named **mysql** with a password
+* `VSFTPD_USER_1=mysql:mysql:999:/srv/ftp/mysql` - Create a user named **mysql** with a password
   of **mysql**. The system user's UID will be **999** and the FTP user's root directory will be
   set to `/srv/ftp/mysql`.
 
@@ -97,7 +97,7 @@ _Considerations_
    to a sub-directory of the user's home directory. The reason for this is because the user
    does not have write permissions in the root of their home directory.
 2. Any folder that is mounted must already have the same permissions as the system user that
-   the FTP user is operating under. So, if the we define a `VSFTP_USER_1=user1:pass:33:`, then
+   the FTP user is operating under. So, if the we define a `VSFTPD_USER_1=user1:pass:33:`, then
    the mounted folders must be owned by a user with ID of `33` for the FTP user to access it.
 
 ### Named Volumes
