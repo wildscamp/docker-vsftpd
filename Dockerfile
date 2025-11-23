@@ -14,14 +14,14 @@ RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
 # Configuration environment variables
 ENV \
     DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
-    LOG_FILE=/var/log/vsftpd.log \
+    LOG_FILE=/var/log/vsftpd/vsftpd.log \
     PAM_FILE=/etc/pam.d/vsftpd \
     PASSWD_FILE=/etc/vsftpd/vsftpd.passwd \
     SSL=false \
     USER_CONFIG_DIR=/etc/vsftpd/vusers
 
 # Create directories and configure PAM in a single layer
-RUN mkdir -p /etc/vsftpd ${USER_CONFIG_DIR} /var/run/vsftpd/empty /home/virtual \
+RUN mkdir -p /etc/vsftpd ${USER_CONFIG_DIR} /var/run/vsftpd/empty /home/virtual /var/log/vsftpd \
     && echo "auth required pam_pwdfile.so pwdfile ${PASSWD_FILE}" > ${PAM_FILE} \
     && echo "account required pam_permit.so" >> ${PAM_FILE}
 

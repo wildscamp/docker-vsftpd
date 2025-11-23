@@ -41,6 +41,7 @@ For reference, their Docker registry page is available at
       - [`PASV_MAX_PORT`](#pasv_max_port)
   - [Ports](#ports)
   - [Volumes](#volumes)
+    - [Logging](#logging)
     - [Considerations](#considerations)
     - [Named Volumes](#named-volumes)
   - [Example Deployment](#example-deployment)
@@ -160,6 +161,31 @@ be mounted.
     overridden by mounting a file to
     `/etc/vsftpd/default_user.conf`.
 
+### Logging
+
+The vsftpd server writes log files to the `/var/log/vsftpd`
+directory inside the container:
+
+- **`/var/log/vsftpd/vsftpd.log`** - Main vsftpd log file containing
+    FTP protocol commands, responses, and connection details (when
+    `log_ftp_protocol=YES`)
+- **`/var/log/vsftpd/xferlog`** - File transfer log recording all
+    upload and download operations
+
+To persist logs on the host system and enable access outside the
+container, mount the log directory as a volume:
+
+```text
+-v ./logs:/var/log/vsftpd
+```
+
+You can then monitor logs in real-time from the host:
+
+```shell
+tail -f ./logs/vsftpd.log
+tail -f ./logs/xferlog
+```
+
 ### Considerations
 
 When mounting host folders, the directory mounted must possess the
@@ -196,6 +222,7 @@ docker run -d \
     -e "VSFTPD_USER_2=mysql:mysql:999:/var/lib/mysql" \
     -v /path/to/host/html:/var/www/html \
     -v /path/to/host/mysql:/var/lib/mysql \
+    -v /path/to/host/logs:/var/log/vsftpd \
     -p "21:21" \
     -p "30000-30009:30000-30009" \
     --restart=always \
