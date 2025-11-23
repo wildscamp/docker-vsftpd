@@ -1,0 +1,24 @@
+services:
+  vsftpd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vsftpd:local
+    container_name: vsftpd
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    environment:
+      LOG_STDOUT: "Yes"
+    volumes:
+      - ftp-home:/home/virtual
+      - ./logs:/var/log/vsftpd
+      - ./conf/default_user.conf:/etc/vsftpd/default_user.conf:ro
+
+volumes:
+  ftp-home:
+    name: ftp-home
+    external: true
