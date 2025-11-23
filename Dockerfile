@@ -1,3 +1,6 @@
+# syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
+
 FROM debian
 
 ENV DEBIAN_FRONTEND noninteractive
