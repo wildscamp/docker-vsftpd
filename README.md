@@ -12,9 +12,11 @@ following core features:
 - Support for **Virtual Users**, allowing the specification of a
     custom home directory (`local_root`) and associated system user
     ID (`FTP_UID`).
-- **Passive Mode (PASV) only** - Active FTP is completely disabled for enhanced security.
+- **Passive Mode (PASV) only** - Active FTP is completely disabled
+  for enhanced security.
 
-The pre-built image can be found on the **Docker registry** at [`alexs77/vsftpd`](https://hub.docker.com/r/alexs77/vsftpd).
+The pre-built image can be found on the **Docker registry** at
+[`alexs77/vsftpd`](https://hub.docker.com/r/alexs77/vsftpd).
 
 ## **Attribution**
 
@@ -97,9 +99,11 @@ arbitrary number of virtual FTP users.
     connections. Setting an IP address is recommended, as the
     container's DNS resolution may not be identical to the Docker
     host's.
-- **Note:** This parameter is **required** for proper FTP operation since only passive mode is supported. vsftpd will automatically advertise the internal
-    Docker IP of the interface on which the connection was received,
-    which is usually unreachable from the client host.
+- **Note:** This parameter is **required** for proper FTP operation
+    since only passive mode is supported. vsftpd will automatically
+    advertise the internal Docker IP of the interface on which the
+    connection was received, which is usually unreachable from the
+    client host.
 
 ##### Common Values
 
@@ -131,7 +135,8 @@ The container exposes the following ports:
     range is defined by the default values for `PASV_MIN_PORT` and
     `PASV_MAX_PORT`.
 
-**Note:** Active FTP mode is completely disabled. Port 20 is not exposed or used.
+**Note:** Active FTP mode is completely disabled. Port 20 is not
+exposed or used.
 
 When running the container, ensure all necessary ports are published
 to your host machine using the `-p` flag or in your
