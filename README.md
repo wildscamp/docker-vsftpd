@@ -15,15 +15,15 @@ following core features:
 - **Passive Mode (PASV) only** - Active FTP is completely disabled
   for enhanced security.
 
-The pre-built image can be found on the **Docker registry** at
+The pre-built image is available on Docker Hub at
 [`alexs77/vsftpd`](https://hub.docker.com/r/alexs77/vsftpd).
 
 ## Attribution
 
 This work is based on the foundation laid by
-**[wildscamp/docker-vsftpd](https://github.com/wildscamp/docker-vsftpd)**.
+[wildscamp/docker-vsftpd](https://github.com/wildscamp/docker-vsftpd).
 For reference, their Docker registry page is available at
-**[`wildscamp/vsftpd`](https://hub.docker.com/r/wildscamp/vsftpd/)**.
+[`wildscamp/vsftpd`](https://hub.docker.com/r/wildscamp/vsftpd/).
 
 ## Table of Contents
 
@@ -179,8 +179,14 @@ application containers (e.g., a web server or database).
 
 ## Example Deployment
 
+The pre-built image is available from Docker Hub. Pull it using:
+
+```shell
+docker pull alexs77/vsftpd:latest
+```
+
 A simple deployment, using the default user configuration, can be
-launched with `docker run` :
+launched with `docker run`:
 
 ```shell
 docker run -d \
@@ -193,7 +199,7 @@ docker run -d \
     -p "21:21" \
     -p "30000-30009:30000-30009" \
     --restart=always \
-    alexs77/vsftpd
+    alexs77/vsftpd:latest
 ```
 
 For more complex or multi-container setups, a `docker-compose.yaml`
@@ -202,7 +208,7 @@ file is recommended:
 ```yaml
 services:
   vsftpd:
-    image: alexs77/vsftpd
+    image: alexs77/vsftpd:latest
     container_name: vsftpd
     restart: always
     env_file:
@@ -251,9 +257,8 @@ environment variables, as illustrated below, or use an external
 
 - **GitHub Repository:**
     [`alexs77/docker-vsftpd`](https://github.com/alexs77/docker-vsftpd)
-- **Docker Registry:**
+- **Docker Hub:**
     [`alexs77/vsftpd`](https://hub.docker.com/r/alexs77/vsftpd)
-    (Assumed)
 - **Original Repository:**
     [`wildscamp/docker-vsftpd`](https://github.com/wildscamp/docker-vsftpd)
 - **Original Docker Registry:**

@@ -1,9 +1,7 @@
 services:
+
   vsftpd:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: vsftpd:local
+    image: alexs77/vsftpd:latest
     container_name: vsftpd
     restart: always
     env_file:
