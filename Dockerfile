@@ -13,14 +13,14 @@ RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
 ENV LOG_FILE=/var/log/vsftpd.log \
     SSL=false \
     PAM_FILE=/etc/pam.d/vsftpd \
-    VSFTPD_AUTH_FILE=/etc/vsftpd/vsftpd.passwd \
+    USER_CREDENTIALS_FILE=/etc/vsftpd/vsftpd.passwd \
     DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
     USER_CONFIG_DIR=/etc/vsftpd/vusers \
     PASV_MIN_PORT=30000 \
     PASV_MAX_PORT=30009
 
 RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual \
-    && echo "auth required pam_pwdfile.so pwdfile ${VSFTPD_AUTH_FILE}" > $PAM_FILE \
+    && echo "auth required pam_pwdfile.so pwdfile ${USER_CREDENTIALS_FILE}" > $PAM_FILE \
     && echo "account required pam_permit.so" >> $PAM_FILE
 
 COPY *.conf /etc/vsftpd/
