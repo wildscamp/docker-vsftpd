@@ -12,7 +12,7 @@ following core features:
 - Support for **Virtual Users**, allowing the specification of a
     custom home directory (`local_root`) and associated system user
     ID (`FTP_UID`).
-- **Passive Mode (PASV)** support is included.
+- **Passive Mode (PASV) only** - Active FTP is completely disabled for enhanced security.
 
 The pre-built image can be found on the **Docker registry** at [`alexs77/vsftpd`](https://hub.docker.com/r/alexs77/vsftpd).
 
@@ -97,8 +97,7 @@ arbitrary number of virtual FTP users.
     connections. Setting an IP address is recommended, as the
     container's DNS resolution may not be identical to the Docker
     host's.
-- **Note:** If this parameter is not specified, FTP communication
-    may fail. vsftpd will automatically advertise the internal
+- **Note:** This parameter is **required** for proper FTP operation since only passive mode is supported. vsftpd will automatically advertise the internal
     Docker IP of the interface on which the connection was received,
     which is usually unreachable from the client host.
 
@@ -127,11 +126,12 @@ arbitrary number of virtual FTP users.
 
 The container exposes the following ports:
 
-- **Port 20/tcp:** FTP Data (Active Mode)
 - **Port 21/tcp:** FTP Control (Command Channel)
 - **Ports 30000-30009/tcp:** Passive Mode (PASV) data ports. This
     range is defined by the default values for `PASV_MIN_PORT` and
     `PASV_MAX_PORT`.
+
+**Note:** Active FTP mode is completely disabled. Port 20 is not exposed or used.
 
 When running the container, ensure all necessary ports are published
 to your host machine using the `-p` flag or in your
@@ -177,7 +177,7 @@ application containers (e.g., a web server or database).
 A simple deployment, using the default user configuration, can be
 launched with `docker run` :
 
-```bash
+```shell
 docker run -d \
     --name vsftpd \
     -e "PASV_ADDRESS=<Your_External_IP>" \
@@ -185,7 +185,7 @@ docker run -d \
     -e "VSFTPD_USER_2=mysql:mysql:999:/var/lib/mysql" \
     -v /path/to/host/html:/var/www/html \
     -v /path/to/host/mysql:/var/lib/mysql \
-    -p "20-21:20-21" \
+    -p "21:21" \
     -p "30000-30009:30000-30009" \
     --restart=always \
     alexs77/vsftpd
@@ -203,7 +203,7 @@ services:
     env_file:
       - .env
     ports:
-      - "20-21:20-21"
+      - "21:21"
       - "30000-30009:30000-30009"
     environment:
       LOG_STDOUT: "Yes"
