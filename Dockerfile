@@ -1,18 +1,17 @@
 # syntax=docker/dockerfile:1
 # check=skip=SecretsUsedInArgOrEnv
 
-FROM debian
+FROM debian:bookworm-slim
 
-ENV DEBIAN_FRONTEND=noninteractive
-
+# Install dependencies in a single layer
 RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
         libpam-pwdfile \
         openssl \
-        vim \
         vsftpd \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Configuration environment variables
 ENV LOG_FILE=/var/log/vsftpd.log \
     SSL=false \
     PAM_FILE=/etc/pam.d/vsftpd \
@@ -22,14 +21,16 @@ ENV LOG_FILE=/var/log/vsftpd.log \
     PASV_MIN_PORT=30000 \
     PASV_MAX_PORT=30009
 
-RUN mkdir -p /etc/vsftpd $USER_CONFIG_DIR /var/run/vsftpd/empty /home/virtual \
-    && echo "auth required pam_pwdfile.so pwdfile ${USER_CREDENTIALS_FILE}" > $PAM_FILE \
-    && echo "account required pam_permit.so" >> $PAM_FILE
+# Create directories and configure PAM in a single layer
+RUN mkdir -p /etc/vsftpd ${USER_CONFIG_DIR} /var/run/vsftpd/empty /home/virtual \
+    && echo "auth required pam_pwdfile.so pwdfile ${USER_CREDENTIALS_FILE}" > ${PAM_FILE} \
+    && echo "account required pam_permit.so" >> ${PAM_FILE}
 
-COPY *.conf /etc/vsftpd/
+# Copy configuration files
+COPY --chmod=644 *.conf /etc/vsftpd/
 
-COPY entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+# Copy and set permissions for entrypoint in one step
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 WORKDIR /etc/vsftpd
 
