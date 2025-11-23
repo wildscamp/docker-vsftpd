@@ -7,26 +7,25 @@ therefore may not be very secure.
 
 This Docker container implements a vsftpd server, with the following features:
 
- * Debian:jesse base image.
- * Virtual users with the ability to specify home directory and system user ID
- * Passive mode
+* Debian:jesse base image.
+* Virtual users with the ability to specify home directory and system user ID
+* Passive mode
 
 The compiled versions of this container can be found in the
 [Docker registry](https://hub.docker.com/r/wildscamp/vsftpd/).
 
-Environment variables
-----
+## Environment variables
 
 This image uses environment variables to allow the configuration of some parameters at run time:
 
-`VSFTPD_USER_[0-9]+`
+### `VSFTPD_USER_[0-9]+`
 
 * **Accepted values:** A string in the format `<username>:<password>:<system_uid>:<ftp_root_dir>`.
   The `<system_uid>` and `<ftp_root_dir>` are optional, but the separating colons must still
   exist.
 * **Description:** These are compound variables that allow for addition of any number of users.
 
-_Examples_
+#### Examples
 
 * `VSFTPD_USER_1=hello:world::` - Create a user named **hello** with a password of **world**. The
   system user's UID will be the same as that of the built-in `ftp` account (UID: `104`) and
@@ -39,14 +38,12 @@ _Examples_
   of **mysql**. The system user's UID will be **999** and the FTP user's root directory will be
   set to `/srv/ftp/mysql`.
 
-_Caveats_
+#### Caveats
 
 * vsftpd apparently has special handling of an FTP user with the name `ftp`, so it's
   recommended to not use this name when defining an FTP user.
 
-----
-
-`PASV_ADDRESS`
+### `PASV_ADDRESS`
 
 * **Accepted values:** DNS name or IP address that you use to FTP into this container.
 * **Description:** This tells vsftpd which address to advertise to FTP clients as its address
@@ -56,7 +53,7 @@ _Caveats_
   will automatically use the IP of the interface on which the connection was received and that
   IP will usually be internal to the docker container.
 
-_Common Values_
+#### Common Values
 
 | Environment        | IP             | Comment                   |
 |--------------------|----------------|---------------------------|
@@ -65,33 +62,29 @@ _Common Values_
 
 ----
 
-`PASV_MIN_PORT`
+### `PASV_MIN_PORT`
 
 * **Default value:** 30000
 * **Accepted values:** an integer less than `PASV_MAX_PORT`.
 * **Description:** The minimum port to use for passive connections.
 
-----
-
-`PASV_MAX_PORT`
+### `PASV_MAX_PORT`
 
 * **Default value:** 30009
 * **Accepted values:** an integer that is greater than `PASV_MIN_PORT`.
 * **Description:** The minimum port to use for passive connections.
 
-Ports
-----
+### Ports
 
 vsftpd is configured to listen on port `21`. The container will need to open that port up as well
 as the range of passive ports (defaults of `30000-30009`).
 
-Volumes
-----
+### Volumes
 
 By default, a user is given an FTP home directory of `/home/virtual/${username}`. Any volumes
-that you want a user to access should be mounted underneath the user's home folder. 
+that you want a user to access should be mounted underneath the user's home folder.
 
-_Considerations_
+### Considerations
 
 1. It's important that these are not mounted directly to the user's home directory but instead
    to a sub-directory of the user's home directory. The reason for this is because the user
@@ -111,7 +104,7 @@ named volumes to multiple containers at the same time. So, your application data
 in a named volume and that same volume can be attached to this container to present FTP
 access to that data. That is one of the main reasons this container was created.
 
-_Example_
+## Example
 
 ```bash
   # create the volume
@@ -135,11 +128,9 @@ You'll notice that both containers are given the same named volume but mounted i
 locations. If one container changed something in the named volume, that change will be
 reflected in the other container.
 
-Use cases
-----
+## Use cases
 
-1) Spin up an the FTP server with a user named **hello**, password of **world** and mount a
-   named volume under **hello**'s FTP root directory:
+1. Spin up an the FTP server with a user named **hello**, password of **world** and mount a named volume under **hello**'s FTP root directory:
 
 ```bash
   docker run --rm --name vsftpd -i \
@@ -150,7 +141,7 @@ Use cases
     -t wildscamp/vsftpd
 ```
 
-2) Create multiple users with access to different volumes:
+2. Create multiple users with access to different volumes:
 
 ```bash
   docker run --rm --name vsftpd -i \
@@ -163,8 +154,7 @@ Use cases
     -t wildscamp/vsftpd
 ```
 
-User Environment Variables and Docker Compose
-----
+## User Environment Variables and Docker Compose
 
 There is one special consideration regarding the `VSFTPD_USER_[0-9]+` environment variables
 and Docker Compose. If you do not specify a root directory in a user configuration variable,
