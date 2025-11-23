@@ -21,7 +21,7 @@ setfolderpermissions() {
     usergroupid="$(getent passwd "$1" | cut -d':' -f4)"
     usergroup="$(getent group "$usergroupid" | cut -d':' -f1)"
 
-    echo "Chown: $username:$usergroup $2" >> /etc/vsftpd/tmp.txt
+    echo "Chown: $username:$usergroup ($usergroupid) $2" >> /etc/vsftpd/tmp.txt
     chown "$username:$usergroup" "$2"
 }
 
@@ -111,8 +111,6 @@ setftpconfigsetting() {
 }
 
 setftpconfigsetting "pasv_address" "$PASV_ADDRESS" /etc/vsftpd/vsftpd.conf
-setftpconfigsetting "pasv_min_port" "$PASV_MIN_PORT" /etc/vsftpd/vsftpd.conf
-setftpconfigsetting "pasv_max_port" "$PASV_MAX_PORT" /etc/vsftpd/vsftpd.conf
 
 # make sure the passwd file exists
 touch $PASSWD_FILE
