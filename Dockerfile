@@ -12,11 +12,12 @@ RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Configuration environment variables
-ENV LOG_FILE=/var/log/vsftpd.log \
-    SSL=false \
+ENV \
+    DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
+    LOG_FILE=/var/log/vsftpd.log \
     PAM_FILE=/etc/pam.d/vsftpd \
     PASSWD_FILE=/etc/vsftpd/vsftpd.passwd \
-    DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
+    SSL=false \
     USER_CONFIG_DIR=/etc/vsftpd/vusers
 
 # Create directories and configure PAM in a single layer
