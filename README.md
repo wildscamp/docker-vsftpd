@@ -209,15 +209,10 @@ services:
       LOG_STDOUT: "Yes"
     volumes:
       - ftp-home:/home/virtual
-      - ftp-srv:/srv/ftp
       - ./logs:/var/log/vsftpd
       - ./conf/default_user.conf:/etc/vsftpd/default_user.conf:ro
 
 volumes:
-  ftp-srv:
-    name: ftp-srv
-    external: true
-  
   ftp-home:
     name: ftp-home
     external: true
