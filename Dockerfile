@@ -17,9 +17,7 @@ ENV LOG_FILE=/var/log/vsftpd.log \
     PAM_FILE=/etc/pam.d/vsftpd \
     PASSWD_FILE=/etc/vsftpd/vsftpd.passwd \
     DEFAULT_USER_CONFIG=/etc/vsftpd/default_user.conf \
-    USER_CONFIG_DIR=/etc/vsftpd/vusers \
-    PASV_MIN_PORT=30000 \
-    PASV_MAX_PORT=30009
+    USER_CONFIG_DIR=/etc/vsftpd/vusers
 
 # Create directories and configure PAM in a single layer
 RUN mkdir -p /etc/vsftpd ${USER_CONFIG_DIR} /var/run/vsftpd/empty /home/virtual \
