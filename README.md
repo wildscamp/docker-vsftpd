@@ -9,7 +9,7 @@ environment in mind and therefore may not be very secure.
 This Docker container implements a vsftpd server, with the following
 features:
 
-- Debian:jesse base image.
+- Debian:bookworm-slim base image.
 - Virtual users with the ability to specify home directory and system
   user ID
 - Passive mode
