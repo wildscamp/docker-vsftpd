@@ -48,6 +48,8 @@ createuser() {
         # make the home directory if it doesn't already exist
         if [ ! -z "$homedir" ] && [ ! -e "$homedir" ]; then
             mkdir -p "$homedir"
+            # Set write permissions for the user
+            chmod 755 "$homedir"
         fi
 
         setfolderpermissions "$username" "$homedir"
@@ -71,6 +73,12 @@ createuser() {
             fi
 
             adduser --system --uid="$1" --gid="$groupid" "$username" > /dev/null
+            
+            # Set write permissions for newly created users
+            homedir="$(getent passwd "$1" | cut -d':' -f6)"
+            if [ ! -z "$homedir" ] && [ -e "$homedir" ]; then
+                chmod 755 "$homedir"
+            fi
         else
             # we were given a name
             groupid="$(getent group "$1" | cut -d':' -f3)"
@@ -87,6 +95,12 @@ createuser() {
                 adduser --system --gid="$groupid" "$username" > /dev/null
             else
                 adduser --system --uid="$groupid" --gid="$groupid" "$username" > /dev/null
+            fi
+            
+            # Set write permissions for newly created users
+            homedir="$(getent passwd "$username" | cut -d':' -f6)"
+            if [ ! -z "$homedir" ] && [ -e "$homedir" ]; then
+                chmod 755 "$homedir"
             fi
         fi
     fi
@@ -201,6 +215,12 @@ for VARIABLE in $(env); do
         # make sure the virtual home directory exists
         if [ ! -d "$VSFTPD_USER_HOME_DIR" ]; then
             mkdir -p "$VSFTPD_USER_HOME_DIR"
+            chown "$username:$username" "$VSFTPD_USER_HOME_DIR"
+            chmod 755 "$VSFTPD_USER_HOME_DIR"
+        else
+            # Directory already exists, set permissions anyway
+            chown "$username:$username" "$VSFTPD_USER_HOME_DIR"
+            chmod 755 "$VSFTPD_USER_HOME_DIR"
         fi
 
 cat << EOB
