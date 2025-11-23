@@ -3,7 +3,7 @@
 
 FROM debian
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qq && apt-get install -qqy --no-install-recommends \
         libpam-pwdfile \
