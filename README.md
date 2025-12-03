@@ -1,3 +1,9 @@
+# ⚠️ **DEPRECATION NOTICE** ⚠️
+
+This project is no longer actively maintained. For ongoing development and updates, please refer to the more active fork at [alexs77/docker-vsftpd](https://github.com/alexs77/docker-vsftpd/).
+
+The [Docker Hub container](https://hub.docker.com/r/wildscamp/vsftpd/) for this project will remain at version **2.0.0** and will not receive further updates.
+
 # FTP Server for Local Development Environments
 
 ![Docker Logo](https://www.gravatar.com/avatar/def8e498c0e2b4d1b0cb398ca164cddd?s=115) ![The Wilds Logo](https://www.gravatar.com/avatar/731d4f0ca8553a4f4b2a4f35d1d72280?s=115)
